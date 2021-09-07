@@ -90,7 +90,7 @@ resource "aws_instance" "this" {
     command = "aws s3 cp ${path.module}/secret s3://PATHTOKEYPAIR/ --recursive"
   }
 
-  #--- Copy .NET applications from S3 keys to destication dir
+  #--- Copy reporting applications from S3 bucket to destication dir
   provisioner "local-exec" {
       command = "aws s3 cp s3://myBucket/dir destination_dir --recursive"
   }
