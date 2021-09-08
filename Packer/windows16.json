@@ -5,7 +5,25 @@
     "region": "YOUR_AWS_REGION"
   },
 
-  "builders": [{
+  "builders": [
+    {
+    "type": "amazon-ebs",
+    "temporary_iam_instance_profile_policy_document": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::my-bucket",
+            "arn:aws:s3:::my-bucket/*"
+          ]
+        }
+    },
+    {
     "type": "amazon-ebs",
     "profile": "{{user `profile`}}",
     "region": "{{user `region`}}",
@@ -38,8 +56,8 @@
       "volume_type": "gp2",
       "delete_on_termination": true
     }]
-    
-  }],
+  }
+],
     
   "provisioners": [
     {
@@ -58,6 +76,15 @@
     "inline": [
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
       "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
+    ]
+  },
+  {
+    "type": "powershell",
+    "inline": [
+      "Set-ExecutionPolicy Bypass -Scope Process -Force",
+      "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
+      "choco install -y awscli",
+      "aws s3 sync s3://my-bucket/ C:\\Temp\\"
     ]
   }
 ]
