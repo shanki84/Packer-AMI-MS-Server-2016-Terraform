@@ -22,6 +22,7 @@
             "arn:aws:s3:::my-bucket/*"
           ]
         }
+      }
     },
     {
     "type": "amazon-ebs",
