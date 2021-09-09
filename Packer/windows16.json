@@ -22,7 +22,10 @@
             "arn:aws:s3:::my-bucket/*"
           ]
         }
-      },
+      }
+    },
+    {
+    "type": "amazon-ebs",
     "profile": "{{user `profile`}}",
     "region": "{{user `region`}}",
     "source_ami_filter": {
