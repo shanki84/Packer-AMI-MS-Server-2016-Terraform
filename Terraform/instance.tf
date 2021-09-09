@@ -1,5 +1,5 @@
 #---- Test Development Server
-resource "aws_instance" "this" {
+resource "aws_instance" "ec2" {
   ami                  = "${data.aws_ami.Windows_2016.image_id}"
   instance_type        = "${var.instance}"
   key_name             = "${module.ssh_key_pair.key_name}"
