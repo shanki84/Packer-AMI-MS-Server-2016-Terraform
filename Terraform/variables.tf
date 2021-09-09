@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "Set aws region"
-  default = "ap-southeast-2"
+  default = "eu-west-2"
 }
 
 variable "aws_profile" {

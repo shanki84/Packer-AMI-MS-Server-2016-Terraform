@@ -1,17 +1,17 @@
 output "instance_id" {
-  value = "${aws_instance.this.id}"
+  value = "${aws_instance.ec2}"
 }
 
 output "Public_DNS" {
-  value = "${aws_instance.this.public_dns}"
+  value = "${aws_instance.ec2.public_dns}"
 }
 
 output "Instance_Public_IP" {
-  value = "${aws_instance.this.public_ip}"
+  value = "${aws_instance.ec2.public_ip}"
 }
 
 output "Administrator_Password" {
-  value = "${rsadecrypt(aws_instance.this.password_data, file("${module.ssh_key_pair.private_key_filename}"))}"
+  value = "${rsadecrypt(aws_instance.ec2.password_data, file("${module.ssh_key_pair.private_key_filename}"))}"
 }
 
 output "SSH_Key_Name" {
