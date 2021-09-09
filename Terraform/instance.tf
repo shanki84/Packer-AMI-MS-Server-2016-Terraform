@@ -20,6 +20,22 @@ resource "aws_instance" "this" {
     "Role"    = "Dev"
   }
 
+resource "aws_launch_template" "dev" {
+  name_prefix   = "dev"
+  image_id      = "${data.aws_ami.Windows_2016.image_id}"
+  instance_type = "${var.instance}"
+}
+resource "aws_autoscaling_group" "ec2" {
+  availability_zones = ["eu-west-2"]
+  desired_capacity   = 3
+  max_size           = 6
+  min_size           = 3
+
+  launch_template {
+    id      = aws_launch_template.dev.id
+    version = "$Latest"
+  }
+}
   #--- Copy ssh keys to S3 Bucket
   provisioner "local-exec" {
     command = "aws s3 cp ${path.module}/secret s3://PATHTOKEYPAIR/ --recursive"
